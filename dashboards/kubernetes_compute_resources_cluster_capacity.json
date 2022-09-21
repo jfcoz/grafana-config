@@ -123,7 +123,84 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU capacity"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#5f5f5f",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU allocatable"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU requests"
+            },
+            "properties": [
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU usage"
+            },
+            "properties": [
+              {
+                "id": "custom.lineWidth",
+                "value": 3
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -150,7 +227,7 @@
           "expr": "sum(kube_node_status_capacity{resource=\"cpu\",node=~\"$node\"})",
           "legendFormat": "CPU capacity",
           "range": true,
-          "refId": "A"
+          "refId": "capacity"
         },
         {
           "editorMode": "code",
@@ -158,7 +235,7 @@
           "hide": false,
           "legendFormat": "CPU allocatable",
           "range": true,
-          "refId": "B"
+          "refId": "allocatable"
         },
         {
           "editorMode": "code",
@@ -166,7 +243,7 @@
           "hide": false,
           "legendFormat": "CPU requests",
           "range": true,
-          "refId": "C"
+          "refId": "request"
         },
         {
           "editorMode": "code",
@@ -174,7 +251,7 @@
           "hide": false,
           "legendFormat": "CPU usage",
           "range": true,
-          "refId": "D"
+          "refId": "usage"
         },
         {
           "editorMode": "code",
@@ -182,7 +259,15 @@
           "hide": false,
           "legendFormat": "CPU waste",
           "range": true,
-          "refId": "E"
+          "refId": "waste"
+        },
+        {
+          "editorMode": "code",
+          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\"})",
+          "hide": false,
+          "legendFormat": "CPU allocatable minus one node",
+          "range": true,
+          "refId": "allocatable-minus-one-node"
         }
       ],
       "title": "CPU Capacity",
@@ -272,7 +357,7 @@
           "hide": false,
           "instant": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{namespace}}/{{pod}}",
           "range": true,
           "refId": "B"
         }
@@ -345,7 +430,83 @@
           },
           "unit": "decbytes"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mem capacity"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mem allocatable"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mem request"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-yellow",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Mem usage"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "dark-red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 3
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -369,39 +530,13 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
-          "interval": "",
-          "legendFormat": "Mem request",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "exemplar": true,
           "expr": "sum (kube_node_status_capacity{resource=\"memory\",node=~\"$node\"})",
           "hide": false,
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Mem capacity",
-          "refId": "B"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_limits{resource=\"memory\",node=~\"$node\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Mem limit",
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"})",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Mem usage",
-          "range": true,
-          "refId": "D"
+          "refId": "capacity"
         },
         {
           "exemplar": true,
@@ -411,7 +546,33 @@
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "Mem allocatable",
-          "refId": "E"
+          "refId": "allocatable"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "interval": "",
+          "legendFormat": "Mem request",
+          "range": true,
+          "refId": "request"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_limits{resource=\"memory\",node=~\"$node\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Mem limit",
+          "range": true,
+          "refId": "limit"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Mem usage",
+          "range": true,
+          "refId": "usage"
         },
         {
           "exemplar": true,
@@ -420,7 +581,7 @@
           "interval": "",
           "legendFormat": "mem remaining",
           "range": true,
-          "refId": "F"
+          "refId": "remaining"
         },
         {
           "editorMode": "code",
@@ -428,7 +589,15 @@
           "hide": false,
           "legendFormat": "Memory waste",
           "range": true,
-          "refId": "G"
+          "refId": "waste"
+        },
+        {
+          "editorMode": "code",
+          "expr": "sum(kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\"})",
+          "hide": false,
+          "legendFormat": "Mem allocatable minus one node",
+          "range": true,
+          "refId": "allocatable-minus-one-node"
         }
       ],
       "title": "Memory capacity",
@@ -516,7 +685,8 @@
           "expr": "sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"}) - sum by (namespace,pod) (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"}) > 0",
           "hide": false,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{namespace}}/{{pod}}",
+          "range": true,
           "refId": "C"
         }
       ],
