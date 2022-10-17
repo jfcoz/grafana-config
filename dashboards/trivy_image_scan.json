@@ -685,7 +685,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "max by (vuln_id) (\n    trivy_vulnerability_id{namespace=~\"$namespace\",severity=~\"(?i)$severity\"}\n)",
+          "expr": "max by (vuln_id) (\n    trivy_vulnerability_id{namespace=~\"$namespace\",severity=~\"$severity\"}\n)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
