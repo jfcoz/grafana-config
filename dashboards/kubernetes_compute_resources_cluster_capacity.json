@@ -174,24 +174,11 @@
       "type": "timeseries"
     },
     {
-      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 8
-      },
-      "id": 17,
-      "panels": [],
-      "title": "Pods",
-      "type": "row"
-    },
-    {
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
       },
       "id": 13,
       "title": "CPU",
@@ -333,7 +320,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 9
       },
       "id": 9,
       "options": {
@@ -460,7 +447,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 9
       },
       "id": 6,
       "options": {
@@ -493,11 +480,24 @@
       "type": "timeseries"
     },
     {
+      "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 18
+      },
+      "id": 17,
+      "panels": [],
+      "title": "Pods",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
       },
       "id": 11,
       "title": "Memory",
@@ -639,7 +639,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 20
       },
       "id": 2,
       "options": {
@@ -791,7 +791,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 20
       },
       "id": 4,
       "options": {
@@ -822,7 +822,6 @@
     },
     {
       "datasource": "${DS_PROMETHEUS}",
-      "description": "containers using more memory than requested are at risk of eviction",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -877,12 +876,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 12,
         "x": 0,
-        "y": 20
+        "y": 29
       },
-      "id": 15,
+      "id": 21,
       "options": {
         "legend": {
           "calcs": [],
@@ -902,12 +901,12 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "(\n    (\n        sum by(container, namespace, pod) (container_memory_usage_bytes{node=~\"$node\"})\n        -\n        sum by(container, namespace, pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"})\n    )\n    or\n    (\n        sum by(container, namespace, pod) (container_memory_usage_bytes)\n        -\n        vector(0)\n    )\n) > 0 * 1024 * 1024",
+          "expr": "sum by(container, namespace, pod) (container_memory_working_set_bytes{node=~\"$node\",container!=\"\"})",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Memory usage over request",
+      "title": "containers memory usage",
       "type": "timeseries"
     },
     {
@@ -969,7 +968,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 20
+        "y": 29
       },
       "id": 3,
       "options": {
@@ -997,12 +996,106 @@
       ],
       "title": "Memory over reservation ratio",
       "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "containers using more memory than requested are at risk of eviction",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "id": 15,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "(\n    (\n        sum by(container, namespace, pod) (container_memory_working_set_bytes{node=~\"$node\",container!=\"\"})\n        -\n        sum by(container, namespace, pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"})\n    )\n    or\n    (\n        sum by(container, namespace, pod) (container_memory_working_set_bytes{node=~\"$node\",container!=\"\"})\n    )\n) > 0 * 1024 * 1024",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Memory usage over request",
+      "type": "timeseries"
     }
   ],
   "refresh": "30m",
-  "schemaVersion": 36,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [
+    "jfcoz",
     "kubernetes",
     "capacity"
   ],
