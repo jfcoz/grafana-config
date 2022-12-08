@@ -698,7 +698,12 @@
   "refresh": "30m",
   "schemaVersion": 37,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "jfcoz",
+    "kubernetes",
+    "security",
+    "trivy"
+  ],
   "templating": {
     "list": [
       {
