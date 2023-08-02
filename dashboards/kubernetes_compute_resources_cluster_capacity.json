@@ -281,7 +281,7 @@
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
-          "refId": "A"
+          "refId": "request"
         },
         {
           "datasource": {
@@ -296,7 +296,67 @@
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
-          "refId": "B"
+          "refId": "allocatable"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "free"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Cached_bytes\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "cached"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes + node_memory_Cached_bytes\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "freeable"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Buffers_bytes\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "buffers"
         }
       ],
       "title": "Memory allocatable usage",
@@ -321,9 +381,13 @@
             },
             "indexByName": {},
             "renameByName": {
-              "Value #A": "request",
-              "Value #B": "allocatable",
+              "Value #request": "request",
+              "Value #allocatable": "allocatable",
+              "Value #free": "free",
+              "Value #cached": "cached",
+              "Value #buffers": "buffers",
               "Value #usage": "usage",
+              "Value #freeable": "freeable",
               "type 2": ""
             }
           }
