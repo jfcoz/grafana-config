@@ -134,7 +134,9 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "avg by(namespace,pod,pool) (rate(phpfpm_accepted_connections{namespace=~\"$namespace\",pool=~\"$pool\"}[$__rate_interval]))",
+          "exemplar": false,
+          "expr": "avg by(namespace,pod,pool) (rate(phpfpm_accepted_connections{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"}[$__rate_interval]))",
+          "hide": false,
           "legendFormat": "{{namespace}}/{{pool}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -228,7 +230,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "avg by(namespace,pod,pool) (phpfpm_active_processes{namespace=~\"$namespace\",pool=~\"$pool\"}/phpfpm_total_processes{namespace=~\"$namespace\",pool=~\"$pool\"})",
+          "expr": "avg by(namespace,pod,pool) (phpfpm_active_processes{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"}/phpfpm_total_processes{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"})",
           "legendFormat": "{{namespace}}/{{pool}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -319,7 +321,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "avg by(namespace,pod,pool) (phpfpm_active_processes{namespace=~\"$namespace\",pool=~\"$pool\"})",
+          "expr": "avg by(namespace,pod,pool) (phpfpm_active_processes{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"})",
           "legendFormat": "{{namespace}}/{{pool}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -410,7 +412,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "avg by(namespace,pod,pool) (phpfpm_total_processes{namespace=~\"$namespace\",pool=~\"$pool\"})",
+          "expr": "avg by(namespace,pod,pool) (phpfpm_total_processes{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"})",
           "legendFormat": "{{namespace}}/{{pool}}/{{pod}}",
           "range": true,
           "refId": "A"
@@ -502,7 +504,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum by(namespace,pool,pod) (avg by(namespace,pool,pod,child) (rate(phpfpm_process_request_duration{namespace=~\"$namespace\",pool=~\"$pool\"}[$__rate_interval]))) > 100000",
+          "expr": "sum by(namespace,pool,pod) (avg by(namespace,pool,pod,child) (rate(phpfpm_process_request_duration{namespace=~\"$namespace\",pool=~\"$pool\",service=\"$service\"}[$__rate_interval]))) > 100000",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -555,6 +557,23 @@
         "refresh": 1,
         "regex": "",
         "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {},
+        "definition": "label_values(phpfpm_accepted_connections{namespace=~\"$namespace\"},service)",
+        "includeAll": true,
+        "multi": true,
+        "name": "service",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(phpfpm_accepted_connections{namespace=~\"$namespace\"},service)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
       }
     ]
   },
@@ -566,6 +585,6 @@
   "timezone": "browser",
   "title": "PHP FPM",
   "uid": "ceh7lsjrvkqv4f",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }
