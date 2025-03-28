@@ -264,7 +264,7 @@
       {
         "allowCustomValue": false,
         "current": {},
-        "definition": "label_values(phpfpm_accepted_connections{namespace=\"$namespace\"},pool)",
+        "definition": "label_values(phpfpm_accepted_connections{namespace=~\"$namespace\"},pool)",
         "description": "",
         "includeAll": true,
         "multi": true,
@@ -272,7 +272,7 @@
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(phpfpm_accepted_connections{namespace=\"$namespace\"},pool)",
+          "query": "label_values(phpfpm_accepted_connections{namespace=~\"$namespace\"},pool)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
