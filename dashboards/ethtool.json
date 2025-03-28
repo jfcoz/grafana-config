@@ -53,10 +53,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -135,10 +132,7 @@
       "pluginVersion": "11.5.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(instance) (rate(node_netstat_TcpExt_TCPOFOQueue[1m])) > 0",
           "legendFormat": "__auto",
@@ -150,10 +144,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -237,20 +228,14 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         }
       ],
       "title": "container_network_receive_packets_dropped_total",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -334,20 +319,14 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         }
       ],
       "title": "container_network_transmit_packets_dropped_total",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -431,20 +410,14 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         }
       ],
       "title": "container_network_receive_bytes_total",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -528,20 +501,14 @@
           "legendFormat": "__auto",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         }
       ],
       "title": "container_network_transmit_bytes_total",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -625,16 +592,10 @@
           "legendFormat": "out {{instance}}/{{device}}",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(instance,device) (rate(node_ethtool_bw_in_allowance_exceeded[$__rate_interval]))",
           "hide": false,
@@ -644,10 +605,7 @@
           "refId": "B"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(instance,device) (rate(node_ethtool_linklocal_allowance_exceeded{}[$__rate_interval]))",
           "hide": false,
