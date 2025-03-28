@@ -1552,7 +1552,12 @@
   ],
   "refresh": "30s",
   "schemaVersion": 40,
-  "tags": [],
+  "tags": [
+    "jfcoz",
+    "varnish",
+    "kubernetes",
+    "kube-httpcache"
+  ],
   "templating": {
     "list": [
       {

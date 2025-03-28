@@ -621,7 +621,11 @@
   ],
   "refresh": "1m",
   "schemaVersion": 40,
-  "tags": [],
+  "tags": [
+    "jfcoz",
+    "ethtool",
+    "kubernetes"
+  ],
   "templating": {
     "list": []
   },
