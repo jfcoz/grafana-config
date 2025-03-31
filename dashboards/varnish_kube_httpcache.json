@@ -1106,7 +1106,11 @@
           "refId": "cache_hitgrace"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "name": "Expression",
+            "type": "__expr__",
+            "uid": "__expr__"
+          },
           "expression": "$cache_hit / ($cache_hit+$cache_hitpass+$cache_hitpass+$cache_hitgrace+$cache_miss)",
           "hide": false,
           "refId": "A",
