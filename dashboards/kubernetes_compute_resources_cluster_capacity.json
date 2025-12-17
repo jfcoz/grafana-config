@@ -656,7 +656,7 @@
         },
         {
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"})",
           "hide": false,
           "legendFormat": "CPU allocatable minus one node",
           "range": true,
@@ -1364,7 +1364,7 @@
         },
         {
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"})",
           "hide": false,
           "legendFormat": "Mem allocatable minus one node",
           "range": true,
