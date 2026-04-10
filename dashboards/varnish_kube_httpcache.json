@@ -1509,12 +1509,12 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "rate(varnish_main_n_lru_limited{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
           "legendFormat": "{{pod}} lru_limited",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         }
       ],
       "title": "LRU Limited",
@@ -2062,7 +2062,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "",
+          "value": "${DS_PROMETHEUS}",
+          "selected": true
+        },
         "includeAll": false,
         "label": "datasource",
         "name": "DS_PROMETHEUS",
@@ -2133,6 +2137,6 @@
   "timezone": "browser",
   "title": "Varnish (kube-httpcache)",
   "uid": "bege5v3gz239cc",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }
