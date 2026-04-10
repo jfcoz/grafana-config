@@ -27,7 +27,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.5.2"
+      "version": "12.4.2"
     },
     {
       "type": "datasource",
@@ -67,15 +67,27 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 17,
+      "panels": [],
+      "title": "Pod resources",
+      "type": "row"
+    },
     {
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 1
       },
       "id": 16,
       "options": {
@@ -87,13 +99,15 @@
         "content": "https://varnish-cache.org/docs/trunk/reference/varnish-counters.html#varnish-counters-7",
         "mode": "markdown"
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "title": "Metrics documentation",
       "type": "text"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -123,6 +137,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -138,7 +153,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -153,7 +168,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 0
+        "y": 1
       },
       "id": 13,
       "options": {
@@ -169,84 +184,103 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_overload{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_overload",
           "range": true,
-          "refId": "sc_overload",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "sc_overload"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_pipe_overflow{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_pipe_overflow",
           "range": true,
           "refId": "sc_pipe_overflow"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_range_short{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_range_short",
           "range": true,
           "refId": "sc_range_short"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rem_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rem_close",
           "range": true,
           "refId": "sc_rem_close"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_req_close",
           "range": true,
           "refId": "sc_req_close"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_http10{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_req_http10",
           "range": true,
           "refId": "sc_req_http10"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_http20{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_req_http20",
           "range": true,
           "refId": "sc_req_http20"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_resp_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_resp_close",
           "range": true,
           "refId": "sc_resp_close"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_vcl_failure{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_vcl_failure",
           "range": true,
           "refId": "sc_vcl_failure"
@@ -256,8 +290,247 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 9
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "kube_pod_container_resource_requests{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\",resource=\"memory\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "container_memory_rss{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Memory RSS vs request",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "cores"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 9
+      },
+      "id": 19,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "kube_pod_container_resource_requests{resource=\"cpu\",namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}[$__rate_interval])",
+          "instant": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU usage vs request",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 11,
+      "panels": [],
+      "title": "Client connections",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -287,6 +560,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -302,7 +576,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -317,7 +591,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 18
       },
       "id": 14,
       "options": {
@@ -333,57 +607,70 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_bad{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_bad",
           "range": true,
-          "refId": "sc_rx_bad",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "sc_rx_bad"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_body{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rx_body",
           "range": true,
           "refId": "sc_rx_body"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_rx_close_idle{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rx_close_idle",
           "range": true,
           "refId": "sc_rx_close_idle"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_junk{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rx_junk",
           "range": true,
           "refId": "sc_rx_junk"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_overflow{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rx_overflow",
           "range": true,
           "refId": "sc_rx_overflow"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_timeout{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_rx_timeout",
           "range": true,
           "refId": "sc_rx_timeout"
@@ -393,8 +680,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
-      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -424,6 +713,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -439,7 +729,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -454,7 +744,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 18
       },
       "id": 15,
       "options": {
@@ -470,30 +760,37 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_eof{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_tx_eof",
           "range": true,
-          "refId": "sc_tx_eof",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "sc_tx_eof"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_error{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_tx_error",
           "range": true,
           "refId": "sc_tx_error"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_pipe{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "legendFormat": "{{pod}} sc_tx_pipe",
           "range": true,
           "refId": "sc_tx_pipe"
@@ -508,20 +805,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
-      },
-      "id": 11,
-      "panels": [],
-      "title": "Client connections",
-      "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 17
+        "y": 26
       },
       "id": 8,
       "panels": [],
@@ -529,7 +813,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -559,6 +846,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -574,7 +862,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -589,7 +877,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 18
+        "y": 27
       },
       "id": 9,
       "options": {
@@ -605,22 +893,28 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_bans_added{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         }
       ],
       "title": "Bans added",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -650,6 +944,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -665,7 +960,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -680,7 +975,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 27
       },
       "id": 10,
       "options": {
@@ -696,15 +991,18 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_bans_completed{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "__auto",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         }
       ],
       "title": "Bans completed",
@@ -716,7 +1014,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 35
       },
       "id": 5,
       "panels": [],
@@ -724,7 +1022,10 @@
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -754,6 +1055,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -768,7 +1070,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -844,7 +1147,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 27
+        "y": 36
       },
       "id": 3,
       "options": {
@@ -860,51 +1163,62 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_miss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "cache_miss {{pod}}",
           "range": true,
-          "refId": "cache_miss",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "cache_miss"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "cache_hit {{pod}}",
           "range": true,
           "refId": "cache_hit"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitmiss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "cache_hitmiss {{pod}}",
           "range": true,
           "refId": "cache_hitmiss"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitpass{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "cache_hitpass {{pod}}",
           "range": true,
           "refId": "cache_hitpass"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit_grace{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "cache_hitgrace {{pod}}",
           "range": true,
@@ -915,7 +1229,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -947,6 +1264,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -961,7 +1279,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1038,7 +1357,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 27
+        "y": 36
       },
       "id": 7,
       "options": {
@@ -1054,19 +1373,25 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_miss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
           "legendFormat": "cache_miss {{pod}}",
           "range": true,
-          "refId": "cache_miss",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "cache_miss"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1076,7 +1401,10 @@
           "refId": "cache_hit"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitmiss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1086,7 +1414,10 @@
           "refId": "cache_hitmiss"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitpass{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1096,7 +1427,10 @@
           "refId": "cache_hitpass"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit_grace{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1107,12 +1441,10 @@
         },
         {
           "datasource": {
-            "name": "Expression",
             "type": "__expr__",
-            "uid": "__expr__"
+            "uid": "${DS_EXPRESSION}"
           },
           "expression": "$cache_hit / ($cache_hit+$cache_hitpass+$cache_hitpass+$cache_hitgrace+$cache_miss)",
-          "hide": false,
           "refId": "A",
           "type": "math"
         }
@@ -1121,7 +1453,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1151,6 +1486,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1165,7 +1501,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1180,7 +1517,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 44
       },
       "id": 12,
       "options": {
@@ -1196,15 +1533,18 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "varnish_main_n_object{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}",
           "legendFormat": "{{pod}} objects",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         }
       ],
       "title": "Objects in cache",
@@ -1216,15 +1556,18 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 52
       },
-      "id": 6,
+      "id": 21,
       "panels": [],
-      "title": "Backend connections",
+      "title": "LRU",
       "type": "row"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1254,6 +1597,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1268,7 +1612,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1283,7 +1628,316 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 44
+        "y": 53
+      },
+      "id": 22,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "rate(varnish_main_n_lru_limited{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
+          "legendFormat": "{{pod}} lru_limited",
+          "range": true,
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          }
+        }
+      ],
+      "title": "LRU Limited",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 53
+      },
+      "id": 23,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "rate(varnish_main_n_lru_nuked{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
+          "instant": false,
+          "legendFormat": "{{pod}} lru_nuked",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "LRU Nuked",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 61
+      },
+      "id": 24,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "12.4.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "rate(varnish_main_n_lru_moved{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
+          "instant": false,
+          "legendFormat": "{{pod}} lru_moved",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "LRU Moved",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 69
+      },
+      "id": 6,
+      "panels": [],
+      "title": "Backend connections",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 70
       },
       "id": 1,
       "options": {
@@ -1299,10 +1953,13 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by (pod,backend) (rate(varnish_backend_req{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} to {{backend}}",
@@ -1314,7 +1971,10 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1344,6 +2004,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1358,7 +2019,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1373,7 +2035,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 44
+        "y": 70
       },
       "id": 2,
       "options": {
@@ -1389,22 +2051,28 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (varnish_backend_conn{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"})",
           "legendFormat": "{{pod}} to {{backend}}",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         }
       ],
       "title": "Varnish backend connections",
       "type": "timeseries"
     },
     {
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1434,6 +2102,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1448,7 +2117,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1463,7 +2133,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 52
+        "y": 78
       },
       "id": 4,
       "options": {
@@ -1479,71 +2149,86 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.5.2",
+      "pluginVersion": "12.4.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "fail {{pod}} to {{backend}}",
           "range": true,
-          "refId": "A",
-          "datasource": "${DS_PROMETHEUS}"
+          "refId": "A"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_etimedout{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail etimedout {{pod}} to {{backend}}",
           "range": true,
           "refId": "B"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_eaccess{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail eaccess {{pod}} to {{backend}}",
           "range": true,
           "refId": "C"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_eaddrnotavail{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail eaddrnotavail {{pod}} to {{backend}}",
           "range": true,
           "refId": "D"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_econnrefused{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail econnrefused {{pod}} to {{backend}}",
           "range": true,
           "refId": "E"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_enetunreach{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail enetunreach {{pod}} to {{backend}}",
           "range": true,
           "refId": "F"
         },
         {
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_other{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "fail other {{pod}} to {{backend}}",
           "range": true,
@@ -1554,8 +2239,9 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 40,
+  "schemaVersion": 42,
   "tags": [
     "jfcoz",
     "varnish",
@@ -1564,6 +2250,17 @@
   ],
   "templating": {
     "list": [
+      {
+        "current": {},
+        "includeAll": false,
+        "label": "datasource",
+        "name": "DS_PROMETHEUS",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "type": "datasource"
+      },
       {
         "allowCustomValue": false,
         "current": {},
@@ -1577,6 +2274,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1592,6 +2290,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -1609,6 +2308,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       }
@@ -1622,6 +2322,6 @@
   "timezone": "browser",
   "title": "Varnish (kube-httpcache)",
   "uid": "bege5v3gz239cc",
-  "version": 5,
+  "version": 2,
   "weekStart": ""
 }
