@@ -104,10 +104,7 @@
       "type": "text"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -187,10 +184,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_overload{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_overload",
@@ -198,10 +192,7 @@
           "refId": "sc_overload"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_pipe_overflow{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_pipe_overflow",
@@ -209,10 +200,7 @@
           "refId": "sc_pipe_overflow"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_range_short{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_range_short",
@@ -220,10 +208,7 @@
           "refId": "sc_range_short"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rem_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rem_close",
@@ -231,10 +216,7 @@
           "refId": "sc_rem_close"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_req_close",
@@ -242,10 +224,7 @@
           "refId": "sc_req_close"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_http10{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_req_http10",
@@ -253,10 +232,7 @@
           "refId": "sc_req_http10"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_req_http20{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_req_http20",
@@ -264,10 +240,7 @@
           "refId": "sc_req_http20"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_resp_close{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_resp_close",
@@ -275,10 +248,7 @@
           "refId": "sc_resp_close"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_vcl_failure{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_vcl_failure",
@@ -290,10 +260,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -375,10 +342,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "kube_pod_container_resource_requests{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\",resource=\"memory\"}",
           "legendFormat": "__auto",
@@ -386,10 +350,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "container_memory_rss{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}",
           "instant": false,
@@ -402,10 +363,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -487,10 +445,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "kube_pod_container_resource_requests{resource=\"cpu\",namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}",
           "legendFormat": "__auto",
@@ -498,10 +453,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\",container=\"varnish\",pod=~\"$service-.*\"}[$__rate_interval])",
           "instant": false,
@@ -527,10 +479,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -610,10 +559,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_bad{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_bad",
@@ -621,10 +567,7 @@
           "refId": "sc_rx_bad"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_body{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_body",
@@ -632,10 +575,7 @@
           "refId": "sc_rx_body"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_rx_close_idle{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_close_idle",
@@ -643,10 +583,7 @@
           "refId": "sc_rx_close_idle"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_junk{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_junk",
@@ -654,10 +591,7 @@
           "refId": "sc_rx_junk"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_overflow{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_overflow",
@@ -665,10 +599,7 @@
           "refId": "sc_rx_overflow"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_rx_timeout{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_rx_timeout",
@@ -680,10 +611,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -763,10 +691,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_eof{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_tx_eof",
@@ -774,10 +699,7 @@
           "refId": "sc_tx_eof"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_error{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_tx_error",
@@ -785,10 +707,7 @@
           "refId": "sc_tx_error"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_sc_tx_pipe{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} sc_tx_pipe",
@@ -813,10 +732,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -896,10 +812,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_bans_added{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "__auto",
@@ -911,10 +824,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -994,10 +904,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod) (rate(varnish_main_bans_completed{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "__auto",
@@ -1022,10 +929,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1166,10 +1070,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_miss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "cache_miss {{pod}}",
@@ -1177,10 +1078,7 @@
           "refId": "cache_miss"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -1189,10 +1087,7 @@
           "refId": "cache_hit"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitmiss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -1201,10 +1096,7 @@
           "refId": "cache_hitmiss"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitpass{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -1213,10 +1105,7 @@
           "refId": "cache_hitpass"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit_grace{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -1229,10 +1118,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1376,10 +1262,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_miss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1388,10 +1271,7 @@
           "refId": "cache_miss"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1401,10 +1281,7 @@
           "refId": "cache_hit"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitmiss{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1414,10 +1291,7 @@
           "refId": "cache_hitmiss"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hitpass{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1427,10 +1301,7 @@
           "refId": "cache_hitpass"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod) (rate(varnish_main_cache_hit_grace{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "hide": true,
@@ -1453,10 +1324,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1536,10 +1404,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "varnish_main_n_object{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}",
           "legendFormat": "{{pod}} objects",
@@ -1564,10 +1429,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1652,20 +1514,14 @@
           "legendFormat": "{{pod}} lru_limited",
           "range": true,
           "refId": "A",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          }
+          "datasource": "${DS_PROMETHEUS}"
         }
       ],
       "title": "LRU Limited",
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1745,10 +1601,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "rate(varnish_main_n_lru_nuked{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
           "instant": false,
@@ -1761,10 +1614,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1844,10 +1694,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "rate(varnish_main_n_lru_moved{namespace=~\"$namespace\",service=~\"$service\",pod=~\"$pod\"}[$__rate_interval])",
           "instant": false,
@@ -1873,10 +1720,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1956,10 +1800,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by (pod,backend) (rate(varnish_backend_req{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "{{pod}} to {{backend}}",
@@ -1971,10 +1812,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2054,10 +1892,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (varnish_backend_conn{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"})",
           "legendFormat": "{{pod}} to {{backend}}",
@@ -2069,10 +1904,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": "${DS_PROMETHEUS}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2152,10 +1984,7 @@
       "pluginVersion": "12.4.2",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "legendFormat": "fail {{pod}} to {{backend}}",
@@ -2163,10 +1992,7 @@
           "refId": "A"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_etimedout{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -2175,10 +2001,7 @@
           "refId": "B"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_eaccess{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -2187,10 +2010,7 @@
           "refId": "C"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_eaddrnotavail{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -2199,10 +2019,7 @@
           "refId": "D"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_econnrefused{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -2211,10 +2028,7 @@
           "refId": "E"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_enetunreach{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
@@ -2223,10 +2037,7 @@
           "refId": "F"
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "expr": "avg by(pod,backend) (rate(varnish_backend_fail_other{namespace=\"$namespace\",service=\"$service\",pod=~\"$pod\"}[$__rate_interval]))",
           "instant": false,
