@@ -1315,7 +1315,7 @@
             "type": "__expr__",
             "uid": "${DS_EXPRESSION}"
           },
-          "expression": "$cache_hit / ($cache_hit+$cache_hitpass+$cache_hitpass+$cache_hitgrace+$cache_miss)",
+          "expression": "$cache_hit / ($cache_hit+$cache_miss)",
           "refId": "A",
           "type": "math"
         }
