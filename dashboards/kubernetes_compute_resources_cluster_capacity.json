@@ -166,7 +166,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum (kube_pod_info{node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (kube_pod_info{node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Pods",
           "range": true,
           "refId": "A"
@@ -174,7 +174,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum (kube_node_status_allocatable{resource=\"pods\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (kube_node_status_allocatable{resource=\"pods\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Pods capacity",
           "range": true,
           "refId": "B"
@@ -182,7 +182,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"pods\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"pods\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Pods capacity minus one node",
           "range": true,
           "refId": "C"
@@ -274,7 +274,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "count(kube_node_info * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "count(kube_node_info * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Total",
           "range": true,
           "refId": "C"
@@ -385,7 +385,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by(node) (rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum by(node) (rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -397,7 +397,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum by (node) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -408,7 +408,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by(node) (kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum by(node) (kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -615,7 +615,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(kube_node_status_capacity{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(kube_node_status_capacity{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "CPU capacity",
           "range": true,
           "refId": "capacity"
@@ -623,7 +623,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "CPU allocatable",
           "range": true,
           "refId": "allocatable"
@@ -631,7 +631,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
           "legendFormat": "CPU requests",
           "range": true,
           "refId": "request"
@@ -639,7 +639,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "CPU usage",
           "range": true,
           "refId": "usage"
@@ -647,7 +647,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)\n- sum(rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)\n- sum(rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "CPU waste",
           "range": true,
           "refId": "waste"
@@ -655,7 +655,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "CPU allocatable minus one node",
           "range": true,
           "refId": "allocatable-minus-one-node"
@@ -749,7 +749,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n-\navg by (namespace,pod) (rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n> 0",
+          "expr": "avg by (namespace,pod) (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n-\navg by (namespace,pod) (rate(container_cpu_usage_seconds_total{image!=\"\",node=~\"$node\"}[5m]) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n> 0",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1015,7 +1015,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by(node,type) (\n    label_replace(\n        sum by(node) (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} @ end() * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n        ,\"type\",\"usage\",\"node\",\".*\"\n    )\n)",
+          "expr": "sum by(node,type) (\n    label_replace(\n        sum by(node) (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} @ end() * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n        ,\"type\",\"usage\",\"node\",\".*\"\n    )\n)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1027,7 +1027,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by(node,type) (\n    label_replace(\n        sum by (node) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n        ,\"type\",\"request\",\"node\",\".*\"\n    )\n)",
+          "expr": "sum by(node,type) (\n    label_replace(\n        sum by (node) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (namespace,pod) group_left(phase) (kube_pod_status_phase{phase=~\"^(Pending|Running|Terminating)$\"} == 1) * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n        ,\"type\",\"request\",\"node\",\".*\"\n    )\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1038,7 +1038,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by(node,type) (\n    label_replace(\n        sum by(node) (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} @ end() * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n        ,\"type\",\"allocatable\",\"node\",\".*\"\n    )\n)",
+          "expr": "sum by(node,type) (\n    label_replace(\n        sum by(node) (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} @ end() * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n        ,\"type\",\"allocatable\",\"node\",\".*\"\n    )\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1049,7 +1049,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}\n)",
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1060,7 +1060,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Cached_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}\n)",
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Cached_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1071,7 +1071,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes{node=~\"$node\"} + node_memory_Cached_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}\n)",
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_MemFree_bytes{node=~\"$node\"} + node_memory_Cached_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1082,7 +1082,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": false,
-          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Buffers_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}\n)",
+          "expr": "avg by(node) (\n    avg by(internal_ip) (\n        label_replace(\n            avg by(instance) (\n                node_memory_Buffers_bytes{node=~\"$node\"}\n            ),\n            \"internal_ip\",\n            \"$1\",\n            \"instance\",\n            \"([^:]+):.*\"\n        )\n    )\n    * on(internal_ip) group_right\n    kube_node_info{node=~\"$node\"}\n    * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n)",
           "format": "table",
           "instant": true,
           "legendFormat": "__auto",
@@ -1298,7 +1298,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (kube_node_status_capacity{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (kube_node_status_capacity{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1309,7 +1309,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1320,7 +1320,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
           "interval": "",
           "legendFormat": "Mem request",
           "range": true,
@@ -1330,7 +1330,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_limits{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_limits{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
           "interval": "",
           "legendFormat": "Mem limit",
           "range": true,
@@ -1340,7 +1340,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "interval": "",
           "legendFormat": "Mem usage",
           "range": true,
@@ -1350,7 +1350,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n-\nsum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
+          "expr": "sum (kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n-\nsum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)",
           "interval": "",
           "legendFormat": "mem remaining",
           "range": true,
@@ -1359,7 +1359,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)\n-\nsum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum (\n    sum by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    * on(namespace, pod) group_left() max by (namespace, pod) (\n        kube_pod_status_phase{phase=~\"Pending|Running\"} == 1\n    )\n)\n-\nsum (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Memory waste",
           "range": true,
           "refId": "waste"
@@ -1367,7 +1367,7 @@
         {
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
-          "expr": "sum(kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n*\n(\n    sum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n    -\n    1\n)\n/\nsum(kube_node_status_condition{condition=\"Ready\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))",
           "legendFormat": "Mem allocatable minus one node",
           "range": true,
           "refId": "allocatable-minus-one-node"
@@ -1462,7 +1462,7 @@
           "datasource": "${DS_PROMETHEUS}",
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n-\navg by (namespace,pod) (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"})\n> 0",
+          "expr": "avg by (namespace,pod) (kube_pod_container_resource_requests{resource=\"memory\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n-\navg by (namespace,pod) (container_memory_working_set_bytes{container!=\"\",node=~\"$node\"} * on (node) group_left avg by(node) (kube_node_spec_taint{effect=\"NoSchedule\",key=~\"$taint_key\",value=~\"$taint_value\"}))\n> 0",
           "interval": "",
           "legendFormat": "{{namespace}}/{{pod}}",
           "range": true,
